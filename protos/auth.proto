@@ -1,0 +1,58 @@
+//protoc --go_out=./gen/ --go-grpc_out=./gen/ ./protos/auth.proto
+
+syntax="proto3";
+
+package auth;
+
+option go_package = ".;auth";
+
+service AuthService {
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+    rpc Unregister (UnregisterRequest) returns (UnregisterResponse);
+    rpc Login(LoginRequest) returns (LoginResponse);
+    rpc Logout(LogoutRequest) returns (LogoutResponse);
+    rpc UpdatePassword(UpdatePasswordRequest) returns (UpdatePasswordResponse);
+    rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+}
+
+message RegisterRequest {
+    string login=1;
+    string password=2;
+}
+message RegisterResponse {
+    string userId=1;
+}
+message UnregisterRequest {
+    string userId=1;
+}
+message UnregisterResponse {   
+}
+
+message LoginRequest {
+    string login=1;
+    string password=2;
+    string deviceCode=3;
+}
+message LoginResponse {
+    string accessToken=1;
+    string refreshToken=2;
+}
+message LogoutRequest {
+    string userId=1;
+    string deviceCode=2;
+}
+message LogoutResponse {
+}
+message UpdatePasswordRequest {
+    string userId=1;
+    string newPassword=2;
+}
+message UpdatePasswordResponse {
+}
+message RefreshTokenRequest {
+    string refreshTokenId=1;
+}
+message RefreshTokenResponse {
+    string accessToken=1;
+    string refreshToken=2;
+}
