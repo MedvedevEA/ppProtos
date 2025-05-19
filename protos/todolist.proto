@@ -1,0 +1,9 @@
+syntax="proto3";
+
+package todolist;
+
+option go_package = ".;todolist";
+
+service TodolistService {
+
+}
