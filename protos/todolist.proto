@@ -1,9 +1,222 @@
+//protoc --go_out=./gen/ --go-grpc_out=./gen/ ./protos/todolist.proto
 syntax="proto3";
 
 package todolist;
 
-option go_package = ".;todolist";
+option go_package = "./todolist;todolist";
 
 service TodolistService {
+    rpc AddMessage (AddMessageRequest) returns (AddMessageResponse);
+    rpc GetMessage (GetMessageRequest) returns (GetMessageResponse);
+    rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse);
+    rpc UpdateMessage(UpdateMessageRequest) returns (UpdateMessageResponse);
+    rpc RemoveMessage(RemoveMessageRequest) returns (RemoveMessageResponse);
 
+    rpc AddStatus (AddStatusRequest) returns (AddStatusResponse);
+    rpc GetStatus (GetStatusRequest) returns (GetStatusResponse);
+    rpc GetStatuses(GetStatusesRequest) returns (GetStatusesResponse);
+    rpc UpdateStatus(UpdateStatusRequest) returns (UpdateStatusResponse);
+    rpc RemoveStatus(RemoveStatusRequest) returns (RemoveStatusResponse);
+
+    rpc AddTask (AddTaskRequest) returns (AddTaskResponse);
+    rpc GetTask (GetTaskRequest) returns (GetTaskResponse);
+    rpc GetTasks(GetTasksRequest) returns (GetTasksResponse);
+    rpc UpdateTask(UpdateTaskRequest) returns (UpdateTaskResponse);
+    rpc RemoveTask(RemoveTaskRequest) returns (RemoveTaskResponse);
+
+    rpc AddTaskUser (AddTaskUserRequest) returns (AddTaskUserResponse);
+    rpc GetTaskUsers(GetTaskUsersRequest) returns (GetTaskUsersResponse);
+    rpc RemoveTaskUser(RemoveTaskUserRequest) returns (RemoveTaskUserResponse);
+
+    rpc AddUser (AddUserRequest) returns (AddUserResponse);
+    rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
+    rpc RemoveUser(RemoveUserRequest) returns (RemoveUserResponse);
+}
+// user's message
+message User {
+	string UserId=1; 
+	string name=2;
+}
+message AddUserRequest{
+	string UserId=1; 
+    string name=2;
+}
+message AddUserResponse {
+    User data=1;
+}
+message GetUsersRequest {
+    int64 offset=1;
+    int64 limit=2;
+    string name=3; 
+}
+message GetUsersResponse {
+    repeated User data=1;
+}
+message RemoveUserRequest{
+    string UserId=1;
+}
+message RemoveUserResponse {
+    message Data{
+    }
+    Data data=1;
+}
+// taskUser's message
+message TaskUser {
+	string taskUserId=1; 
+    string taskId=2; 
+    string userId=3; 
+}
+message AddTaskUserRequest{
+    string taskId=1; 
+    string userId=2; 
+}
+message AddTaskUserResponse {
+    TaskUser data=1;
+}
+message GetTaskUsersRequest {
+    int64 offset=1;
+    int64 limit=2;
+    string taskId=3; 
+    string userId=4; 
+}
+message GetTaskUsersResponse {
+    repeated TaskUser data=1;
+}
+message RemoveTaskUserRequest{
+    string taskUserId=1;
+}
+message RemoveTaskUserResponse {
+    message Data{
+    }
+    Data data=1;
+}
+// task's message
+message Task {
+	string taskId=1; 
+    string statusId=2;
+	string title=3;
+    string description=4;
+}
+message AddTaskRequest{
+    string statusId=1;
+	string title=2;
+    string description=3;
+}
+message AddTaskResponse {
+    Task data=1;
+}
+message GetTaskRequest{
+    string taskId=1;
+}
+message GetTaskResponse {
+    Task data=1;
+}
+message GetTasksRequest {
+    int64 offset=1;
+    int64 limit=2;
+    string statusId=3;
+}
+message GetTasksResponse {
+    repeated Task data=1;
+}
+message UpdateTaskRequest {
+	string taskId=1; 
+    string statusId=2;
+	string title=3;
+    string description=4;
+}
+message UpdateTaskResponse {
+    Task data=1;
+}
+message RemoveTaskRequest{
+    string TaskId=1;
+}
+message RemoveTaskResponse {
+    message Data{
+    }
+    Data data=1;
+}
+// status's Status
+message Status {
+	string statusId=1; 
+	string name=2;
+}
+message AddStatusRequest{
+	string name=1;
+}
+message AddStatusResponse {
+    Status data=1;
+}
+message GetStatusRequest{
+    string statusId=1;
+}
+message GetStatusResponse {
+    Status data=1;
+}
+message GetStatusesRequest {
+}
+message GetStatusesResponse {
+    repeated Status data=1;
+}
+message UpdateStatusRequest {
+    string statusId=1;
+    string name=2;
+}
+message UpdateStatusResponse {
+    Status data=1;
+}
+message RemoveStatusRequest{
+    string statusId=1;
+}
+message RemoveStatusResponse {
+    message Data{
+    }
+    Data data=1;
+}
+
+// message's message
+message Message {
+	string messageId=1; 
+	string taskId=2;
+	string userId=3;
+	string text=4;
+	string createAt=5;
+	string updateAt=6;
+}
+message AddMessageRequest{
+    string taskId=1;
+    string userId=2;
+	string text=3;
+}
+message AddMessageResponse {
+    Message data=1;
+}
+message GetMessageRequest{
+    string messageId=1;
+}
+message GetMessageResponse {
+    Message data=1;
+}
+message GetMessagesRequest {
+    int64 offset=1;
+    int64 limit=2;
+    string taskId=3;
+}
+message GetMessagesResponse {
+    repeated Message data=1;
+}
+message UpdateMessageRequest {
+    string messageId=1;
+    string text=2;
+}
+message UpdateMessageResponse {
+    Message data=1;
+}
+message RemoveMessageRequest{
+    string messageId=1;
+}
+message RemoveMessageResponse {
+    message Data{
+    }
+    Data data=1;
 }
