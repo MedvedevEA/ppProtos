@@ -1,3 +1,3 @@
-module github.com/MedvedevEA/ppProtos
+module ppProtos
 
 go 1.24.0
